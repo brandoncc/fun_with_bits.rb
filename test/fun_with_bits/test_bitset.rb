@@ -165,5 +165,42 @@ module FunWithBits
 
       assert_equal 18, bitset.size
     end
+
+    def test_set_with_argument_sets_the_specified_bit_to_true
+      bitset = Bitset.new
+      assert_equal false, bitset[3]
+
+      bitset.set(3)
+      assert_equal true, bitset[3]
+    end
+
+    def test_set_with_argument_does_not_set_unspecified_bits_to_true
+      bitset = Bitset.new(initial_value: 0b0, size: 4)
+
+      bitset.set(3)
+
+      assert_equal false, bitset[0]
+      assert_equal false, bitset[1]
+      assert_equal false, bitset[2]
+    end
+
+    def test_set_without_argument_sets_all_bits_to_true
+      bitset = Bitset.new(initial_value: 0b0, size: 4)
+      refute bitset.all?
+
+      bitset.set
+      assert bitset.all?
+    end
+
+    def test_set_throws_out_of_range_error_if_index_is_out_of_bounds
+      bitset = Bitset.new(initial_value: 0b1111, size: 4)
+
+      error = assert_raises Bitset::OutOfRangeError do
+        bitset.set(4)
+      end
+
+      assert_includes error.message, "index 4"
+      assert_includes error.message, "size 4"
+    end
   end
 end

@@ -67,10 +67,40 @@ module FunWithBits
       !any?
     end
 
+    def set(index = nil)
+      if index
+        set_one_bit(index)
+      else
+        set_all_bits
+      end
+    end
+
     def test(index)
       self[index].tap do |value|
         raise OutOfRangeError, "index #{index} out of bounds for Bitset with size #{size}" if value.nil?
       end
+    end
+
+    private
+
+    def set_one_bit(index) # rubocop:disable Naming/AccessorMethodName
+      raise OutOfRangeError, "index #{index} out of bounds for Bitset with size #{size}" if index >= size
+
+      mask = ONE_SET_BIT_MASK
+      mask <<= index
+
+      @bits |= mask
+    end
+
+    def set_all_bits
+      new_bits = ONE_SET_BIT_MASK
+
+      (size - 1).times do
+        new_bits <<= 1
+        new_bits |= ONE_SET_BIT_MASK
+      end
+
+      @bits = new_bits
     end
   end
 end
