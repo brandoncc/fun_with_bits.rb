@@ -39,6 +39,18 @@ module FunWithBits
       true
     end
 
+    def any?
+      test_bits = bits
+      return true if ONE_SET_BIT_MASK & test_bits == 1
+
+      (size - 1).times do
+        test_bits >>= 1
+        return true if ONE_SET_BIT_MASK & test_bits == 1
+      end
+
+      false
+    end
+
     def test(index)
       self[index].tap do |value|
         raise OutOfRangeError, "index #{index} out of bounds for Bitset with size #{size}" if value.nil?
