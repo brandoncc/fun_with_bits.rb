@@ -148,6 +148,18 @@ module FunWithBits
       assert_equal false, bitset3.none?
     end
 
+    def test_count_returns_the_number_of_bits_that_are_set_to_true
+      bitset1 = Bitset.new(initial_value: 0b0000, size: 4)
+      bitset2 = Bitset.new(initial_value: 0b0010, size: 4)
+      bitset3 = Bitset.new(initial_value: 0b1010, size: 4)
+      bitset4 = Bitset.new(initial_value: 0b1111, size: 4)
+
+      assert_equal 0, bitset1.count
+      assert_equal 1, bitset2.count
+      assert_equal 2, bitset3.count
+      assert_equal 4, bitset4.count
+    end
+
     def test_size_returns_the_number_of_bits_that_the_bitset_holds
       bitset = Bitset.new(size: 18)
 

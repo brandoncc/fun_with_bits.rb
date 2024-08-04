@@ -51,6 +51,18 @@ module FunWithBits
       false
     end
 
+    def count
+      mask = ONE_SET_BIT_MASK
+      count = bits & mask
+
+      (size - 1).times do
+        mask <<= 1
+        count += 1 if (bits & mask).positive?
+      end
+
+      count
+    end
+
     def none?
       !any?
     end
