@@ -3,6 +3,10 @@
 module FunWithBits
   # A bitset implementation roughly equivalent to std::bitset in C++20
   class Bitset
-    def initialize(size: 8, initial_value: 0b0); end
+    attr_reader :size
+
+    def initialize(size: 8, initial_value: 0b0)
+      @size = size
+    end
   end
 end

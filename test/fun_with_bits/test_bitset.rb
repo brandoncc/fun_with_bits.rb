@@ -8,6 +8,7 @@ module FunWithBits
       bitset = Bitset.new
 
       assert_instance_of Bitset, bitset
+      assert_instance_of Integer, bitset.size
     end
 
     def test_initializer_accepts_initial_bitmap
@@ -20,6 +21,12 @@ module FunWithBits
       bitset = Bitset.new(size: 16)
 
       assert_instance_of Bitset, bitset
+    end
+
+    def test_size_returns_the_number_of_bits_that_the_bitset_holds
+      bitset = Bitset.new(size: 18)
+
+      assert_equal 18, bitset.size
     end
   end
 end
