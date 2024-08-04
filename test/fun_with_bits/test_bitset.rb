@@ -67,6 +67,41 @@ module FunWithBits
       assert_nil bitset[4]
     end
 
+    def test_test_returns_true_if_the_bit_is_set
+      bitset1 = Bitset.new(initial_value: 0b1000)
+      bitset2 = Bitset.new(initial_value: 0b0100)
+      bitset3 = Bitset.new(initial_value: 0b0010)
+      bitset4 = Bitset.new(initial_value: 0b0001)
+
+      assert_equal true, bitset1.test(3)
+      assert_equal true, bitset2.test(2)
+      assert_equal true, bitset3.test(1)
+      assert_equal true, bitset4.test(0)
+    end
+
+    def test_test_returns_false_if_the_bit_is_not_set
+      bitset1 = Bitset.new(initial_value: 0b0111)
+      bitset2 = Bitset.new(initial_value: 0b1011)
+      bitset3 = Bitset.new(initial_value: 0b1101)
+      bitset4 = Bitset.new(initial_value: 0b1110)
+
+      assert_equal false, bitset1.test(3)
+      assert_equal false, bitset2.test(2)
+      assert_equal false, bitset3.test(1)
+      assert_equal false, bitset4.test(0)
+    end
+
+    def test_test_throws_out_of_range_error_if_index_is_out_of_bounds
+      bitset = Bitset.new(initial_value: 0b1111, size: 4)
+
+      error = assert_raises Bitset::OutOfRangeError do
+        bitset.test(4)
+      end
+
+      assert_includes error.message, "index 4"
+      assert_includes error.message, "size 4"
+    end
+
     def test_size_returns_the_number_of_bits_that_the_bitset_holds
       bitset = Bitset.new(size: 18)
 
