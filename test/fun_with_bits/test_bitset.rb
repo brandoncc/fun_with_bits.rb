@@ -102,6 +102,20 @@ module FunWithBits
       assert_includes error.message, "size 4"
     end
 
+    def test_all_returns_true_if_all_bits_are_set
+      bitset = Bitset.new(size: 4, initial_value: 0b1111)
+
+      assert_equal true, bitset.all?
+    end
+
+    def test_all_returns_false_if_all_bits_are_not_set
+      bitset1 = Bitset.new(size: 4, initial_value: 0b0111)
+      bitset2 = Bitset.new(size: 8, initial_value: 0b1111)
+
+      assert_equal false, bitset1.all?
+      assert_equal false, bitset2.all?
+    end
+
     def test_size_returns_the_number_of_bits_that_the_bitset_holds
       bitset = Bitset.new(size: 18)
 

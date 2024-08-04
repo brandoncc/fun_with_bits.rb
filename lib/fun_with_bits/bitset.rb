@@ -5,6 +5,8 @@ module FunWithBits
   class Bitset
     class OutOfRangeError < StandardError; end
 
+    ONE_SET_BIT_MASK = 0b1
+
     attr_reader :bits, :size
     protected :bits
 
@@ -20,9 +22,21 @@ module FunWithBits
     def [](index)
       return nil if index >= size
 
-      mask = 0b1 << index
+      mask = ONE_SET_BIT_MASK << index
 
       (bits & mask).positive?
+    end
+
+    def all?
+      test_bits = bits
+      return false if (ONE_SET_BIT_MASK & test_bits).zero?
+
+      (size - 1).times do
+        test_bits >>= 1
+        return false if (ONE_SET_BIT_MASK & test_bits).zero?
+      end
+
+      true
     end
 
     def test(index)
