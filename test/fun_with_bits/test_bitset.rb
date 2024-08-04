@@ -23,6 +23,20 @@ module FunWithBits
       assert_instance_of Bitset, bitset
     end
 
+    def test_instances_are_equivalent_if_bits_are_equivalent
+      bitset1 = Bitset.new(initial_value: 0b1111)
+      bitset2 = Bitset.new(initial_value: 0b1111)
+
+      assert_equal bitset1, bitset2
+    end
+
+    def test_instances_are_not_equivalent_if_bits_are_not_equivalent
+      bitset1 = Bitset.new(initial_value: 0b1111)
+      bitset2 = Bitset.new(initial_value: 0b1010)
+
+      refute_equal bitset1, bitset2
+    end
+
     def test_size_returns_the_number_of_bits_that_the_bitset_holds
       bitset = Bitset.new(size: 18)
 
