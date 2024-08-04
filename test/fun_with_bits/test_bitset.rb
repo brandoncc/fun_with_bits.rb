@@ -132,6 +132,22 @@ module FunWithBits
       assert_equal false, bitset.any?
     end
 
+    def test_none_returns_true_if_no_bits_are_set
+      bitset = Bitset.new(initial_value: 0b0)
+
+      assert_equal true, bitset.none?
+    end
+
+    def test_none_returns_false_if_any_bits_are_set
+      bitset1 = Bitset.new(initial_value: 0b100, size: 3)
+      bitset2 = Bitset.new(initial_value: 0b010, size: 3)
+      bitset3 = Bitset.new(initial_value: 0b001, size: 3)
+
+      assert_equal false, bitset1.none?
+      assert_equal false, bitset2.none?
+      assert_equal false, bitset3.none?
+    end
+
     def test_size_returns_the_number_of_bits_that_the_bitset_holds
       bitset = Bitset.new(size: 18)
 

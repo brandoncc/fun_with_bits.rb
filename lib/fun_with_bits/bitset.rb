@@ -51,6 +51,10 @@ module FunWithBits
       false
     end
 
+    def none?
+      !any?
+    end
+
     def test(index)
       self[index].tap do |value|
         raise OutOfRangeError, "index #{index} out of bounds for Bitset with size #{size}" if value.nil?
