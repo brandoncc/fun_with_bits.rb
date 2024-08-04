@@ -14,5 +14,13 @@ module FunWithBits
     def ==(other)
       bits == other.bits
     end
+
+    def [](index)
+      return nil if index >= size
+
+      mask = 0b1 << index
+
+      (bits & mask).positive?
+    end
   end
 end

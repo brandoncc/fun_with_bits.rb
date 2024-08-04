@@ -37,6 +37,36 @@ module FunWithBits
       refute_equal bitset1, bitset2
     end
 
+    def test_accessing_a_bit_that_is_set_returns_true
+      bitset1 = Bitset.new(initial_value: 0b1000)
+      bitset2 = Bitset.new(initial_value: 0b0100)
+      bitset3 = Bitset.new(initial_value: 0b0010)
+      bitset4 = Bitset.new(initial_value: 0b0001)
+
+      assert_equal true, bitset1[3]
+      assert_equal true, bitset2[2]
+      assert_equal true, bitset3[1]
+      assert_equal true, bitset4[0]
+    end
+
+    def test_accessing_a_bit_that_is_not_set_returns_false
+      bitset1 = Bitset.new(initial_value: 0b0111)
+      bitset2 = Bitset.new(initial_value: 0b1011)
+      bitset3 = Bitset.new(initial_value: 0b1101)
+      bitset4 = Bitset.new(initial_value: 0b1110)
+
+      assert_equal false, bitset1[3]
+      assert_equal false, bitset2[2]
+      assert_equal false, bitset3[1]
+      assert_equal false, bitset4[0]
+    end
+
+    def test_accessing_a_bit_that_is_out_of_bounds_returns_nil
+      bitset = Bitset.new(initial_value: 0b1111, size: 4)
+
+      assert_nil bitset[4]
+    end
+
     def test_size_returns_the_number_of_bits_that_the_bitset_holds
       bitset = Bitset.new(size: 18)
 
