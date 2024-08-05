@@ -63,6 +63,14 @@ module FunWithBits
       count
     end
 
+    def flip(index = nil)
+      if index
+        flip_one_bit(index)
+      else
+        flip_all_bits
+      end
+    end
+
     def none?
       !any?
     end
@@ -82,6 +90,24 @@ module FunWithBits
     end
 
     private
+
+    def flip_one_bit(index)
+      raise OutOfRangeError, "index #{index} out of bounds for Bitset with size #{size}" if index >= size
+
+      mask = ONE_SET_BIT_MASK << index
+      @bits ^= mask
+    end
+
+    def flip_all_bits
+      mask = ONE_SET_BIT_MASK
+
+      (size - 1).times do
+        mask <<= 1
+        mask |= ONE_SET_BIT_MASK
+      end
+
+      @bits ^= mask
+    end
 
     def set_one_bit(index) # rubocop:disable Naming/AccessorMethodName
       raise OutOfRangeError, "index #{index} out of bounds for Bitset with size #{size}" if index >= size
