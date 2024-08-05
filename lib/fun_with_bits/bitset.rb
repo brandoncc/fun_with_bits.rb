@@ -129,6 +129,22 @@ module FunWithBits
       end
     end
 
+    def xor!(other)
+      raise SetsMustHaveSameSizeError unless other.size == size
+
+      new_bits = NO_BITS_SET_MASK
+
+      (size - 1).downto(0) do |index|
+        self_bit = self[index]
+        other_bit = other[index]
+
+        new_bits <<= 1
+        new_bits |= ONE_SET_BIT_MASK if (self_bit && !other_bit) || (!self_bit && other_bit)
+      end
+
+      @bits = new_bits
+    end
+
     private
 
     def flip_one_bit(index)
