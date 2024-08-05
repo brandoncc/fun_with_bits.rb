@@ -19,6 +19,8 @@ module FunWithBits
     end
 
     def ==(other)
+      return false unless other.is_a?(Bitset)
+
       bits == other.bits
     end
 

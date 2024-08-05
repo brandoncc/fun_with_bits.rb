@@ -46,6 +46,10 @@ module FunWithBits
       refute_equal bitset1, bitset2
     end
 
+    def test_instances_of_other_classes_are_not_equivalent
+      refute Bitset.new == Object.new
+    end
+
     def test_accessing_a_bit_that_is_set_returns_true
       bitset1 = Bitset.new(initial_value: 0b1000)
       bitset2 = Bitset.new(initial_value: 0b0100)
