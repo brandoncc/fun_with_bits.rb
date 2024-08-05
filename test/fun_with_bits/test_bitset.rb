@@ -419,6 +419,12 @@ module FunWithBits
       assert_includes error.message, "size 4"
     end
 
+    def test_to_s_returns_a_string_representation_of_the_data_containing_ones_and_zeros
+      bitset = Bitset.new(initial_value: 0b10101010, size: 8)
+
+      assert_equal "10101010", bitset.to_s
+    end
+
     def test_to_i_returns_a_numeric_representation_of_the_data
       bitset = Bitset.new(initial_value: 0b111)
 

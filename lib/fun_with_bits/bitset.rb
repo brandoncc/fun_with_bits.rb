@@ -167,6 +167,16 @@ module FunWithBits
       total_value
     end
 
+    def to_s
+      output = StringIO.new
+
+      (size - 1).downto(0) do |index|
+        output << (self[index] ? "1" : "0")
+      end
+
+      output.tap(&:rewind).read
+    end
+
     def xor!(other)
       raise SetsMustHaveSameSizeError unless other.size == size
 
