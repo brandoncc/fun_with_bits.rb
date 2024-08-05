@@ -1,6 +1,18 @@
 # FunWithBits
 
-A partial bitset implementation built simply to help me learn about dealing with bits, not a production-ready library.
+A bitset implementation built simply to help me learn about dealing with bits,
+not a production-ready library. The API was created by first writing tests that
+would mirror the basic functionality from std::bitset from C++20. After that, I
+implemented the functionality to make those tests pass.
+
+I had to replace C++ methods like `^=` with functions that were
+Ruby-syntax-friendly. They ended up being named with english-language
+descriptions, such as `xor!` and `shift_left!`.
+
+There is also some functionality which hasn't been implemented such as allowing
+`#to_s` to output characters other than zeroes and ones. Since my main focus is
+on working with bits, I have chosen to leave these extra "nice to have"
+features out for now.
 
 ## Installation
 
