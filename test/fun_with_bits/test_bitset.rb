@@ -32,6 +32,16 @@ module FunWithBits
       assert_equal 7, bitset.send(:bits).to_i
     end
 
+    def test_initializer_requires_positive_size
+      assert_raises ArgumentError do
+        Bitset.new(size: 0)
+      end
+
+      assert_raises ArgumentError do
+        Bitset.new(size: -1)
+      end
+    end
+
     def test_instances_are_equivalent_if_bits_are_equivalent
       bitset1 = Bitset.new(initial_value: 0b1111)
       bitset2 = Bitset.new(initial_value: 0b1111)
@@ -80,6 +90,12 @@ module FunWithBits
       assert_nil bitset[4]
     end
 
+    def test_accessing_a_bit_requires_an_index_greater_or_equal_to_zero
+      assert_raises ArgumentError do
+        assert_nil Bitset.new[-1]
+      end
+    end
+
     def test_test_returns_true_if_the_bit_is_set
       bitset1 = Bitset.new(initial_value: 0b1000)
       bitset2 = Bitset.new(initial_value: 0b0100)
@@ -113,6 +129,12 @@ module FunWithBits
 
       assert_includes error.message, "index 4"
       assert_includes error.message, "size 4"
+    end
+
+    def test_test_cannot_have_negative_index
+      assert_raises ArgumentError do
+        Bitset.new.test(-1)
+      end
     end
 
     def test_all_returns_true_if_all_bits_are_set
@@ -292,6 +314,12 @@ module FunWithBits
       assert_equal 4, bitset.send(:bits).to_i
     end
 
+    def test_shift_left_bang_cannot_have_a_negative_distance
+      assert_raises ArgumentError do
+        Bitset.new.shift_left!(-1)
+      end
+    end
+
     def test_shift_left_returns_a_new_instance_with_the_set_binary_shifted_left
       bitset = Bitset.new(initial_value: 0b1111, size: 4)
 
@@ -299,6 +327,12 @@ module FunWithBits
 
       assert_equal 15, bitset.to_i
       assert_equal 14, shifted_bitset.to_i
+    end
+
+    def test_shift_left_cannot_have_a_negative_distance
+      assert_raises ArgumentError do
+        Bitset.new.shift_left(-1)
+      end
     end
 
     def test_shift_right_bang_modifies_the_set_using_binary_shift_right
@@ -313,6 +347,12 @@ module FunWithBits
       assert_equal 1, bitset.to_i
     end
 
+    def test_shift_right_bang_cannot_have_a_negative_distance
+      assert_raises ArgumentError do
+        Bitset.new.shift_right!(-1)
+      end
+    end
+
     def test_shift_right_returns_a_new_instance_with_the_set_binary_shifted_right
       bitset = Bitset.new(initial_value: 0b1111, size: 4)
 
@@ -320,6 +360,12 @@ module FunWithBits
 
       assert_equal 15, bitset.to_i
       assert_equal 7, shifted_bitset.to_i
+    end
+
+    def test_shift_right_cannot_have_a_negative_distance
+      assert_raises ArgumentError do
+        Bitset.new.shift_right!(-1)
+      end
     end
 
     def test_set_with_argument_sets_the_specified_bit_to_true
@@ -338,6 +384,12 @@ module FunWithBits
       assert_equal false, bitset[0]
       assert_equal false, bitset[1]
       assert_equal false, bitset[2]
+    end
+
+    def test_set_with_argument_cannot_have_negative_index
+      assert_raises ArgumentError do
+        Bitset.new.set(-1)
+      end
     end
 
     def test_set_without_argument_sets_all_bits_to_true
@@ -365,6 +417,12 @@ module FunWithBits
       bitset.reset(3)
 
       assert_equal false, bitset[3]
+    end
+
+    def test_reset_with_argument_cannot_have_negative_index
+      assert_raises ArgumentError do
+        Bitset.new.reset(-1)
+      end
     end
 
     def test_reset_without_argument_sets_all_bits_to_false
@@ -401,6 +459,12 @@ module FunWithBits
 
       assert_equal false, bitset[0]
       assert_equal true, bitset[1]
+    end
+
+    def test_flip_with_argument_cannot_have_a_negative_index
+      assert_raises ArgumentError do
+        Bitset.new.flip(-1)
+      end
     end
 
     def test_flip_without_argument_modifies_the_set_by_flipping_all_bits

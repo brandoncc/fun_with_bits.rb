@@ -2,7 +2,7 @@
 
 module FunWithBits
   # A bitset implementation roughly equivalent to std::bitset in C++20
-  class Bitset
+  class Bitset # rubocop:disable Metrics/ClassLength
     class OutOfRangeError < StandardError; end
     class SetsMustHaveSameSizeError < StandardError; end
 
@@ -13,6 +13,8 @@ module FunWithBits
     protected :bits
 
     def initialize(size: 8, initial_value: NO_BITS_SET_MASK)
+      raise ArgumentError, "size must be greater than 1" if size < 1
+
       @size = size
       @bits = initial_value
       truncate_bits_to_proper_size!
@@ -25,6 +27,7 @@ module FunWithBits
     end
 
     def [](index)
+      raise ArgumentError, "index cannot be a negative number" if index.negative?
       return nil if index >= size
 
       mask = ONE_SET_BIT_MASK << index
@@ -43,6 +46,8 @@ module FunWithBits
     end
 
     def shift_left!(distance)
+      raise ArgumentError, "distance cannot be negative" if distance.negative?
+
       @bits <<= distance
       truncate_bits_to_proper_size!
     end
@@ -54,6 +59,8 @@ module FunWithBits
     end
 
     def shift_right!(distance)
+      raise ArgumentError, "distance cannot be negative" if distance.negative?
+
       @bits >>= distance
     end
 
@@ -109,6 +116,8 @@ module FunWithBits
 
     def flip(index = nil)
       if index
+        raise ArgumentError, "index cannot be negative" if index.negative?
+
         flip_one_bit(index)
       else
         flip_all_bits
@@ -145,6 +154,8 @@ module FunWithBits
 
     def set(index = nil)
       if index
+        raise ArgumentError, "index cannot be negative" if index.negative?
+
         set_one_bit(index)
       else
         set_all_bits
