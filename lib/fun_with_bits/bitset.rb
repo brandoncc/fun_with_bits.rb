@@ -33,6 +33,18 @@ module FunWithBits
       Bitset.new(initial_value: bits, size: size).tap(&:flip)
     end
 
+    def shift_left!(distance)
+      @bits <<= distance
+      size_mask = ONE_SET_BIT_MASK
+
+      (size - 1).times do
+        size_mask <<= 1
+        size_mask ^= ONE_SET_BIT_MASK
+      end
+
+      @bits &= size_mask
+    end
+
     def all?
       test_bits = bits
       return false if (ONE_SET_BIT_MASK & test_bits).zero?

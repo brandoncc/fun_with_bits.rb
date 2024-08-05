@@ -247,6 +247,38 @@ module FunWithBits
       assert_equal true, flipped_bitset[4]
     end
 
+    def test_shift_left_bang_modifies_the_set_using_binary_shift_left
+      bitset = Bitset.new(initial_value: 0b1, size: 8)
+
+      bitset.shift_left! 1
+
+      assert_equal false, bitset[0]
+      assert_equal true, bitset[1]
+
+      bitset.shift_left! 3
+
+      assert_equal false, bitset[0]
+      assert_equal false, bitset[1]
+      assert_equal false, bitset[2]
+      assert_equal false, bitset[3]
+      assert_equal true, bitset[4]
+    end
+
+    def test_shift_left_pushes_bits_out_of_the_window
+      bitset = Bitset.new(initial_value: 0b111, size: 3)
+
+      bitset.shift_left! 1
+
+      # Use native Integer#to_i because our Bitset#to_i implementation only
+      # looks at the `size` window of bits, which means we could actually have
+      # a larger number.
+      assert_equal 6, bitset.send(:bits).to_i
+
+      bitset.shift_left! 1
+
+      assert_equal 4, bitset.send(:bits).to_i
+    end
+
     def test_set_with_argument_sets_the_specified_bit_to_true
       bitset = Bitset.new
       assert_equal false, bitset[3]
