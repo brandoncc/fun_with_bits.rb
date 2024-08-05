@@ -15,6 +15,7 @@ module FunWithBits
     def initialize(size: 8, initial_value: NO_BITS_SET_MASK)
       @size = size
       @bits = initial_value
+      truncate_bits_to_proper_size!
     end
 
     def ==(other)
@@ -35,14 +36,7 @@ module FunWithBits
 
     def shift_left!(distance)
       @bits <<= distance
-      size_mask = ONE_SET_BIT_MASK
-
-      (size - 1).times do
-        size_mask <<= 1
-        size_mask ^= ONE_SET_BIT_MASK
-      end
-
-      @bits &= size_mask
+      truncate_bits_to_proper_size!
     end
 
     def all?
@@ -211,6 +205,17 @@ module FunWithBits
       end
 
       @bits = new_bits
+    end
+
+    def truncate_bits_to_proper_size!
+      size_mask = ONE_SET_BIT_MASK
+
+      (size - 1).times do
+        size_mask <<= 1
+        size_mask ^= ONE_SET_BIT_MASK
+      end
+
+      @bits &= size_mask
     end
   end
 end

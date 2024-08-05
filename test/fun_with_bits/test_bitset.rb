@@ -23,6 +23,15 @@ module FunWithBits
       assert_instance_of Bitset, bitset
     end
 
+    def test_initializer_truncates_initial_value_based_on_size
+      bitset = Bitset.new(initial_value: 0b1111, size: 3)
+
+      # Use native Integer#to_i because our Bitset#to_i implementation only
+      # looks at the `size` window of bits, which means we could actually have
+      # a larger number.
+      assert_equal 7, bitset.send(:bits).to_i
+    end
+
     def test_instances_are_equivalent_if_bits_are_equivalent
       bitset1 = Bitset.new(initial_value: 0b1111)
       bitset2 = Bitset.new(initial_value: 0b1111)
