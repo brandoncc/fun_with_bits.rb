@@ -29,6 +29,10 @@ module FunWithBits
       (bits & mask).positive?
     end
 
+    def ~
+      Bitset.new(initial_value: bits, size: size).tap(&:flip)
+    end
+
     def all?
       test_bits = bits
       return false if (ONE_SET_BIT_MASK & test_bits).zero?

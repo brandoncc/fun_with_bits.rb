@@ -229,6 +229,24 @@ module FunWithBits
       end
     end
 
+    def test_tilde_returns_a_new_instance_with_all_bits_flipped # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+      bitset = Bitset.new(initial_value: 0b1010, size: 5)
+
+      flipped_bitset = ~bitset
+
+      assert_equal false, bitset[0]
+      assert_equal true, bitset[1]
+      assert_equal false, bitset[2]
+      assert_equal true, bitset[3]
+      assert_equal false, bitset[4]
+
+      assert_equal true, flipped_bitset[0]
+      assert_equal false, flipped_bitset[1]
+      assert_equal true, flipped_bitset[2]
+      assert_equal false, flipped_bitset[3]
+      assert_equal true, flipped_bitset[4]
+    end
+
     def test_set_with_argument_sets_the_specified_bit_to_true
       bitset = Bitset.new
       assert_equal false, bitset[3]
