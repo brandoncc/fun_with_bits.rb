@@ -75,6 +75,16 @@ module FunWithBits
       !any?
     end
 
+    def reset(index = nil)
+      if index
+        raise OutOfRangeError, "index #{index} out of bounds for Bitset with size #{size}" if index >= size
+
+        flip(index) if self[index]
+      else
+        @bits &= 0b0
+      end
+    end
+
     def set(index = nil)
       if index
         set_one_bit(index)

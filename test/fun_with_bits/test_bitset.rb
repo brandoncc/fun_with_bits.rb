@@ -203,6 +203,36 @@ module FunWithBits
       assert_includes error.message, "size 4"
     end
 
+    def test_reset_with_argument_sets_the_specified_bit_to_false
+      bitset = Bitset.new(initial_value: 0b1111)
+
+      bitset.reset(3)
+
+      assert_equal false, bitset[3]
+    end
+
+    def test_reset_without_argument_sets_all_bits_to_false
+      bitset = Bitset.new(initial_value: 0b1111)
+
+      bitset.reset
+
+      assert_equal false, bitset[0]
+      assert_equal false, bitset[1]
+      assert_equal false, bitset[2]
+      assert_equal false, bitset[3]
+    end
+
+    def test_reset_throws_out_of_range_error_if_index_is_out_of_bounds
+      bitset = Bitset.new(initial_value: 0b1111, size: 4)
+
+      error = assert_raises Bitset::OutOfRangeError do
+        bitset.reset(4)
+      end
+
+      assert_includes error.message, "index 4"
+      assert_includes error.message, "size 4"
+    end
+
     def test_flip_with_argument_modifies_the_set_by_flipping_the_specified_bit
       bitset = Bitset.new(initial_value: 0b01)
 
