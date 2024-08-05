@@ -297,6 +297,18 @@ module FunWithBits
       assert_equal 14, shifted_bitset.to_i
     end
 
+    def test_shift_right_bang_modifies_the_set_using_binary_shift_right
+      bitset = Bitset.new(initial_value: 0b1111)
+
+      bitset.shift_right!(1)
+
+      assert_equal 7, bitset.to_i
+
+      bitset.shift_right!(2)
+
+      assert_equal 1, bitset.to_i
+    end
+
     def test_set_with_argument_sets_the_specified_bit_to_true
       bitset = Bitset.new
       assert_equal false, bitset[3]

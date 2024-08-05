@@ -45,6 +45,10 @@ module FunWithBits
       truncate_bits_to_proper_size!
     end
 
+    def shift_right!(distance)
+      @bits >>= distance
+    end
+
     def all?
       test_bits = bits
       return false if (ONE_SET_BIT_MASK & test_bits).zero?
