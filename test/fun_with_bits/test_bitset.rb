@@ -309,6 +309,15 @@ module FunWithBits
       assert_equal 1, bitset.to_i
     end
 
+    def test_shift_right_returns_a_new_instance_with_the_set_binary_shifted_right
+      bitset = Bitset.new(initial_value: 0b1111, size: 4)
+
+      shifted_bitset = bitset.shift_right(1)
+
+      assert_equal 15, bitset.to_i
+      assert_equal 7, shifted_bitset.to_i
+    end
+
     def test_set_with_argument_sets_the_specified_bit_to_true
       bitset = Bitset.new
       assert_equal false, bitset[3]
