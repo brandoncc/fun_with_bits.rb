@@ -4,13 +4,15 @@ module FunWithBits
   # A bitset implementation roughly equivalent to std::bitset in C++20
   class Bitset
     class OutOfRangeError < StandardError; end
+    class SetsMustHaveSameSizeError < StandardError; end
 
+    NO_BITS_SET_MASK = 0b0
     ONE_SET_BIT_MASK = 0b1
 
     attr_reader :bits, :size
     protected :bits
 
-    def initialize(size: 8, initial_value: 0b0)
+    def initialize(size: 8, initial_value: NO_BITS_SET_MASK)
       @size = size
       @bits = initial_value
     end
@@ -37,6 +39,20 @@ module FunWithBits
       end
 
       true
+    end
+
+    def and!(other)
+      raise SetsMustHaveSameSizeError unless other.size == size
+
+      new_bits = NO_BITS_SET_MASK
+
+      size.downto(0) do |index|
+        new_bits <<= 1
+
+        new_bits |= ONE_SET_BIT_MASK if self[index] && other[index]
+      end
+
+      @bits = new_bits
     end
 
     def any?
