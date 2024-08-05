@@ -34,6 +34,12 @@ module FunWithBits
       Bitset.new(initial_value: bits, size: size).tap(&:flip)
     end
 
+    def shift_left(distance)
+      Bitset.new(initial_value: bits, size: size).tap do |new_bitset|
+        new_bitset.shift_left!(distance)
+      end
+    end
+
     def shift_left!(distance)
       @bits <<= distance
       truncate_bits_to_proper_size!
