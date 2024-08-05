@@ -91,6 +91,20 @@ module FunWithBits
       !any?
     end
 
+    def or!(other)
+      raise SetsMustHaveSameSizeError unless other.size == size
+
+      new_bits = NO_BITS_SET_MASK
+
+      size.downto(0) do |index|
+        new_bits <<= 1
+
+        new_bits |= ONE_SET_BIT_MASK if self[index] || other[index]
+      end
+
+      @bits = new_bits
+    end
+
     def reset(index = nil)
       if index
         raise OutOfRangeError, "index #{index} out of bounds for Bitset with size #{size}" if index >= size

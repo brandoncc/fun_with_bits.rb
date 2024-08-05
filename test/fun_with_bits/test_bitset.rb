@@ -187,6 +187,27 @@ module FunWithBits
       end
     end
 
+    def test_or_bang_modifies_the_set_using_binary_or
+      bitset1 = Bitset.new(initial_value: 0b1001, size: 4)
+      bitset2 = Bitset.new(initial_value: 0b1010, size: 4)
+
+      bitset1.or!(bitset2)
+
+      assert_equal true, bitset1[0]
+      assert_equal true, bitset1[1]
+      assert_equal false, bitset1[2]
+      assert_equal true, bitset1[3]
+    end
+
+    def test_or_bang_raises_if_bitsets_have_different_sizes
+      bitset1 = Bitset.new(size: 4)
+      bitset2 = Bitset.new(size: 8)
+
+      assert_raises Bitset::SetsMustHaveSameSizeError do
+        bitset1.or!(bitset2)
+      end
+    end
+
     def test_set_with_argument_sets_the_specified_bit_to_true
       bitset = Bitset.new
       assert_equal false, bitset[3]
