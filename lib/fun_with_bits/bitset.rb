@@ -77,6 +77,7 @@ module FunWithBits
     end
 
     def and!(other)
+      raise ArgumentError, "must provide an instance of Bitset as the argument" unless other.is_a?(Bitset)
       raise SetsMustHaveSameSizeError unless other.size == size
 
       new_bits = NO_BITS_SET_MASK
@@ -129,6 +130,7 @@ module FunWithBits
     end
 
     def or!(other)
+      raise ArgumentError, "must provide an instance of Bitset as the argument" unless other.is_a?(Bitset)
       raise SetsMustHaveSameSizeError unless other.size == size
 
       new_bits = NO_BITS_SET_MASK
@@ -191,6 +193,7 @@ module FunWithBits
     end
 
     def xor!(other)
+      raise ArgumentError, "must provide an instance of Bitset as the argument" unless other.is_a?(Bitset)
       raise SetsMustHaveSameSizeError unless other.size == size
 
       new_bits = NO_BITS_SET_MASK

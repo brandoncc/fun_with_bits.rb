@@ -222,6 +222,12 @@ module FunWithBits
       end
     end
 
+    def test_and_bang_raises_when_provided_a_non_bitset_object
+      assert_raises ArgumentError do
+        Bitset.new.and!(Object.new)
+      end
+    end
+
     def test_or_bang_modifies_the_set_using_binary_or
       bitset1 = Bitset.new(initial_value: 0b1001, size: 4)
       bitset2 = Bitset.new(initial_value: 0b1010, size: 4)
@@ -243,6 +249,12 @@ module FunWithBits
       end
     end
 
+    def test_or_bang_raises_when_provided_a_non_bitset_object
+      assert_raises ArgumentError do
+        Bitset.new.or!(Object.new)
+      end
+    end
+
     def test_xor_bang_modifies_the_set_using_binary_xor
       bitset1 = Bitset.new(initial_value: 0b1001, size: 4)
       bitset2 = Bitset.new(initial_value: 0b1010, size: 4)
@@ -261,6 +273,12 @@ module FunWithBits
 
       assert_raises Bitset::SetsMustHaveSameSizeError do
         bitset1.xor!(bitset2)
+      end
+    end
+
+    def test_xor_bang_raises_when_provided_a_non_bitset_object
+      assert_raises ArgumentError do
+        Bitset.new.xor!(Object.new)
       end
     end
 
