@@ -133,6 +133,18 @@ module FunWithBits
       end
     end
 
+    def to_i
+      total_value = 0
+      bit_value = 1
+
+      (0...size).each do |index|
+        total_value += bit_value if self[index]
+        bit_value *= 2
+      end
+
+      total_value
+    end
+
     def xor!(other)
       raise SetsMustHaveSameSizeError unless other.size == size
 
