@@ -207,10 +207,7 @@ module FunWithBits
 
       bitset1.and!(bitset2)
 
-      assert_equal false, bitset1[0]
-      assert_equal false, bitset1[1]
-      assert_equal false, bitset1[2]
-      assert_equal true, bitset1[3]
+      assert_equal "1000", bitset1.to_s
     end
 
     def test_and_bang_raises_if_bitsets_have_different_sizes
@@ -234,10 +231,7 @@ module FunWithBits
 
       bitset1.or!(bitset2)
 
-      assert_equal true, bitset1[0]
-      assert_equal true, bitset1[1]
-      assert_equal false, bitset1[2]
-      assert_equal true, bitset1[3]
+      assert_equal "1011", bitset1.to_s
     end
 
     def test_or_bang_raises_if_bitsets_have_different_sizes
@@ -261,10 +255,7 @@ module FunWithBits
 
       bitset1.xor!(bitset2)
 
-      assert_equal true, bitset1[0]
-      assert_equal true, bitset1[1]
-      assert_equal false, bitset1[2]
-      assert_equal false, bitset1[3]
+      assert_equal "0011", bitset1.to_s
     end
 
     def test_xor_bang_raises_if_bitsets_have_different_sizes
@@ -282,22 +273,13 @@ module FunWithBits
       end
     end
 
-    def test_tilde_returns_a_new_instance_with_all_bits_flipped # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    def test_tilde_returns_a_new_instance_with_all_bits_flipped
       bitset = Bitset.new(initial_value: 0b1010, size: 5)
 
       flipped_bitset = ~bitset
 
-      assert_equal false, bitset[0]
-      assert_equal true, bitset[1]
-      assert_equal false, bitset[2]
-      assert_equal true, bitset[3]
-      assert_equal false, bitset[4]
-
-      assert_equal true, flipped_bitset[0]
-      assert_equal false, flipped_bitset[1]
-      assert_equal true, flipped_bitset[2]
-      assert_equal false, flipped_bitset[3]
-      assert_equal true, flipped_bitset[4]
+      assert_equal "01010", bitset.to_s
+      assert_equal "10101", flipped_bitset.to_s
     end
 
     def test_shift_left_bang_modifies_the_set_using_binary_shift_left
@@ -305,16 +287,11 @@ module FunWithBits
 
       bitset.shift_left! 1
 
-      assert_equal false, bitset[0]
-      assert_equal true, bitset[1]
+      assert_equal "00000010", bitset.to_s
 
       bitset.shift_left! 3
 
-      assert_equal false, bitset[0]
-      assert_equal false, bitset[1]
-      assert_equal false, bitset[2]
-      assert_equal false, bitset[3]
-      assert_equal true, bitset[4]
+      assert_equal "00010000", bitset.to_s
     end
 
     def test_shift_left_pushes_bits_out_of_the_window
@@ -394,14 +371,12 @@ module FunWithBits
       assert_equal true, bitset[3]
     end
 
-    def test_set_with_argument_does_not_set_unspecified_bits_to_true
+    def test_set_with_argument_does_not_set_bits_other_than_the_specified_one
       bitset = Bitset.new(initial_value: 0b0, size: 4)
 
       bitset.set(3)
 
-      assert_equal false, bitset[0]
-      assert_equal false, bitset[1]
-      assert_equal false, bitset[2]
+      assert_equal "1000", bitset.to_s
     end
 
     def test_set_with_argument_cannot_have_negative_index
@@ -444,14 +419,11 @@ module FunWithBits
     end
 
     def test_reset_without_argument_sets_all_bits_to_false
-      bitset = Bitset.new(initial_value: 0b1111)
+      bitset = Bitset.new(initial_value: 0b1111, size: 4)
 
       bitset.reset
 
-      assert_equal false, bitset[0]
-      assert_equal false, bitset[1]
-      assert_equal false, bitset[2]
-      assert_equal false, bitset[3]
+      assert_equal "0000", bitset.to_s
     end
 
     def test_reset_throws_out_of_range_error_if_index_is_out_of_bounds
@@ -466,17 +438,15 @@ module FunWithBits
     end
 
     def test_flip_with_argument_modifies_the_set_by_flipping_the_specified_bit
-      bitset = Bitset.new(initial_value: 0b01)
+      bitset = Bitset.new(initial_value: 0b01, size: 2)
 
       bitset.flip(0)
 
-      assert_equal false, bitset[0]
-      assert_equal false, bitset[1]
+      assert_equal "00", bitset.to_s
 
       bitset.flip(1)
 
-      assert_equal false, bitset[0]
-      assert_equal true, bitset[1]
+      assert_equal "10", bitset.to_s
     end
 
     def test_flip_with_argument_cannot_have_a_negative_index
@@ -490,8 +460,7 @@ module FunWithBits
 
       bitset.flip
 
-      assert_equal false, bitset[0]
-      assert_equal true, bitset[1]
+      assert_equal "10", bitset.to_s
     end
 
     def test_flip_throws_out_of_range_error_if_index_is_out_of_bounds
