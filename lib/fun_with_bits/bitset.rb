@@ -215,13 +215,7 @@ module FunWithBits
     end
 
     def flip_all_bits
-      mask = ONE_SET_BIT_MASK
-
-      (size - 1).times do
-        mask <<= 1
-        mask |= ONE_SET_BIT_MASK
-      end
-
+      mask = (ONE_SET_BIT_MASK << size) - 1
       @bits ^= mask
     end
 
@@ -236,14 +230,7 @@ module FunWithBits
     end
 
     def set_all_bits
-      new_bits = ONE_SET_BIT_MASK
-
-      (size - 1).times do
-        new_bits <<= 1
-        new_bits |= ONE_SET_BIT_MASK
-      end
-
-      @bits = new_bits
+      @bits = (ONE_SET_BIT_MASK << size) - 1
     end
 
     def truncate_bits_to_proper_size!
