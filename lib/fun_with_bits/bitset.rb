@@ -223,8 +223,7 @@ module FunWithBits
       raise ArgumentError, "index cannot be negative" if index.negative?
       raise OutOfRangeError, "index #{index} out of bounds for Bitset with size #{size}" if index >= size
 
-      mask = ONE_SET_BIT_MASK
-      mask <<= index
+      mask = ONE_SET_BIT_MASK << index
 
       @bits |= mask
     end
