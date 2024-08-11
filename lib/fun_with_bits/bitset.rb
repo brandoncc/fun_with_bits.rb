@@ -65,15 +65,9 @@ module FunWithBits
     end
 
     def all?
-      test_bits = bits
-      return false if (ONE_SET_BIT_MASK & test_bits).zero?
+      mask = (1 << size) - 1
 
-      (size - 1).times do
-        test_bits >>= 1
-        return false if (ONE_SET_BIT_MASK & test_bits).zero?
-      end
-
-      true
+      bits == mask
     end
 
     def and!(other)
