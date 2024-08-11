@@ -207,6 +207,7 @@ module FunWithBits
     private
 
     def flip_one_bit(index)
+      raise ArgumentError, "index cannot be negative" if index.negative?
       raise OutOfRangeError, "index #{index} out of bounds for Bitset with size #{size}" if index >= size
 
       mask = ONE_SET_BIT_MASK << index
@@ -225,6 +226,7 @@ module FunWithBits
     end
 
     def set_one_bit(index) # rubocop:disable Naming/AccessorMethodName
+      raise ArgumentError, "index cannot be negative" if index.negative?
       raise OutOfRangeError, "index #{index} out of bounds for Bitset with size #{size}" if index >= size
 
       mask = ONE_SET_BIT_MASK
